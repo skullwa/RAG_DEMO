@@ -14,7 +14,7 @@ from langchain_classic.chains.retrieval import create_retrieval_chain
 # >>>>>>>>> ADD YOUR API KEY HERE <<<<<<<<<
 # It is best practice to set the API key as an environment variable
 # The LangChain classes will automatically detect the GOOGLE_API_KEY environment variable.
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAj4P1NsF-R6-Gl9SkDzvnlBvr-3SPyTCM"
+os.environ["GOOGLE_API_KEY"] = "GIVE_YOUR_KEY"
 
 # Note: The 'google-genai' SDK specific calls that were conflicting have been removed.
 
