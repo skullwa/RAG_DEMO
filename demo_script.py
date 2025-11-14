@@ -1,9 +1,9 @@
 import os
-import streamlit as st
+# import streamlit as st
 from langchain_community.document_loaders import TextLoader
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 # Import the correct classes for Google GenAI within LangChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 # Import the chain functions correctly from the new LangChain structure
@@ -14,7 +14,7 @@ from langchain_classic.chains.retrieval import create_retrieval_chain
 # >>>>>>>>> ADD YOUR API KEY HERE <<<<<<<<<
 # It is best practice to set the API key as an environment variable
 # The LangChain classes will automatically detect the GOOGLE_API_KEY environment variable.
-os.environ["GOOGLE_API_KEY"] = "GIVE_YOUR_KEY"
+os.environ["GOOGLE_API_KEY"] = "GIVE_KEY"
 
 # Note: The 'google-genai' SDK specific calls that were conflicting have been removed.
 
@@ -32,7 +32,7 @@ chunks = text_splitter.split_documents(docs)
 # --- 3. Create Embeddings & Vector Store (FAISS runs locally) ---
 # Initialize the Google GenAI Embeddings class
 embeddings = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
-vector_store = FAISS.from_documents(chunks, embeddings)
+vector_store = Chroma.from_documents(chunks, embeddings)
 
 # --- 4. Define the LLM (Using Google's model within LangChain) ---
 # Initialize the ChatGoogleGenerativeAI class with model and parameters
@@ -70,31 +70,31 @@ def ask_question_live(question):
 # --- 7. Run the Demo (In your presentation, change the questions live) ---
 if __name__ == "__main__":
     # Change 'your_document_name.pdf' above to your file name
-    print("Wlecome to Abhi's RAG Demo. Type 'Exit' to quit.")
-    # while True:
-    # user_question = input("\n Enter your question: ")
-    # if user_question.lower() == 'Exit':
-    # print("Existing RAG system demo.")
-    # break
+    print("Wlecome to Abhi's RAG Demo. Type 'exit' to quit.")
+    while True:
+        user_question = input("\n Enter your question: ")
+        if user_question.lower() == 'exit':
+            print("Existing RAG system demo.")
+            break
 
-    # ask_question_live(user_question)
+        ask_question_live(user_question)
 
-
-st.title("Echo Bot")
+    '''
+    st.write("Abhi Bot")
 
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 # React to user input
-if prompt := st.chat_input("What is up?"):
-    # Display user message in chat message container
-    st.chat_message("user").markdown(prompt)
+    if prompt := st.chat_input("What is up?"):
+        # Display user message in chat message container
+        st.chat_message("user").markdown(prompt)
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
@@ -105,3 +105,4 @@ if prompt := st.chat_input("What is up?"):
     # Add assistant response to chat history
     st.session_state.messages.append(
         {"role": "assistant", "content": response})
+        '''
