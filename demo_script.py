@@ -1,5 +1,5 @@
 import os
-# import streamlit as st
+import streamlit as st
 from langchain_community.document_loaders import TextLoader
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -69,6 +69,7 @@ def ask_question_live(question):
 
 # --- 7. Run the Demo (In your presentation, change the questions live) ---
 if __name__ == "__main__":
+    '''
     # Change 'your_document_name.pdf' above to your file name
     print("Wlecome to Abhi's RAG Demo. Type 'exit' to quit.")
     while True:
@@ -98,11 +99,14 @@ if "messages" not in st.session_state:
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    response = f"Echo: {prompt}"
+    # *** This is the crucial part: Replace the echo with your RAG chain call ***
+    # This invokes the AI model using your defined RAG pipeline
+    ai_response_object = retrieval_chain.invoke({"input": prompt})
+    # Extract the 'answer' from the response dictionary
+    response = ai_response_object['answer']
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
     # Add assistant response to chat history
     st.session_state.messages.append(
         {"role": "assistant", "content": response})
-        '''
